@@ -11,6 +11,7 @@ module.exports = {
         card: '#8e13bdc2',
         form: '#4d0a67',
         input: '#e8f0fe',
+        hover: '#48305c',
       },
       boxShadow: {
         card: '0 2px 6px 0px rgba(115, 72, 126, 0.8)',

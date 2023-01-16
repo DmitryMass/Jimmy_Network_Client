@@ -5,6 +5,8 @@ import SocialInfo from '@/components/UserInfo/SocialInfo/SocialInfo';
 import useTypedSelector from '@/store/storeHooks/useTypedSelector';
 
 import { userInfo } from '@/styles/userInfoStyles';
+import AddPost from '@/components/AddPost/AddPost';
+import Posts from '@/components/Posts/Posts';
 import './home.scss';
 
 const Home: FC = () => {
@@ -20,7 +22,10 @@ const Home: FC = () => {
               <SocialInfo />
             </div>
           </div>
-          <div className='grow'></div>
+          <div className='grow'>
+            <AddPost />
+            <Posts userId={_id} />
+          </div>
         </div>
       </div>
     </div>
