@@ -5,6 +5,7 @@ import useTypedSelector from '@/store/storeHooks/useTypedSelector';
 import locationLogo from '@/assets/icons/location.svg';
 import profession from '@/assets/icons/profession.svg';
 import { IUserType } from '@/types/userType';
+import { useNavigate } from 'react-router-dom';
 
 interface IMainInfoProps {
   userId: string;
@@ -12,6 +13,7 @@ interface IMainInfoProps {
 }
 
 const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<IUserType | null>(null);
   const token = useTypedSelector((state) => state.token);
   const friends = useTypedSelector((state) => state.user.friends);
@@ -52,7 +54,12 @@ const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
   return (
     <>
       <div className={userInfo.box}>
-        <div className={userInfo.user}>
+        <div
+          className={userInfo.user}
+          onClick={() => {
+            navigate(`/profile/${userId}`);
+          }}
+        >
           <img
             className='w-[40px] h-[40px] rounded-full'
             src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'

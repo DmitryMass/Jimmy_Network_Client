@@ -8,6 +8,7 @@ import { userInfo } from '@/styles/userInfoStyles';
 import AddPost from '@/components/AddPost/AddPost';
 import Posts from '@/components/Posts/Posts';
 import './home.scss';
+import FriendList from '@/components/FriendList/FriendList';
 
 const Home: FC = () => {
   const { _id, imgPath } = useTypedSelector((state) => state.user);
@@ -26,6 +27,7 @@ const Home: FC = () => {
             <AddPost />
             <Posts userId={_id} />
           </div>
+          <FriendList userId={_id} />
         </div>
       </div>
     </div>

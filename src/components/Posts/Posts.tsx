@@ -23,7 +23,7 @@ const Posts: FC<IPostsProps> = ({ userId, isProfile = false }) => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const posts = await postsResponse.json();
-      dispatch(setPosts({ posts }));
+      dispatch(setPosts({ posts: posts }));
     } catch (err) {
       console.log(`${err} didn't get posts`);
     }
@@ -55,9 +55,9 @@ const Posts: FC<IPostsProps> = ({ userId, isProfile = false }) => {
 
   return (
     <div>
-      {posts.map((post: IPost) => (
-        <Post post={post} key={post._id} />
-      ))}
+      {posts
+        ? posts?.map((post: IPost) => <Post post={post} key={post._id} />)
+        : null}
     </div>
   );
 };

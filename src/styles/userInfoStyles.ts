@@ -1,5 +1,5 @@
 export const userInfo = {
-  userInfo: 'max-w-[300px] w-full',
+  userInfo: 'max-w-[250px] w-full',
   wrapper: 'w-full p-[20px] shadow-card bg-card rounded-[8px]',
   sameFlexBetween: 'flex justify-between items-center',
   sameFlexTogether: 'flex justify-start items-center',

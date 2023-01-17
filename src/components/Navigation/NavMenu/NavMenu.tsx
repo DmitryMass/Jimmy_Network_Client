@@ -4,14 +4,11 @@ import notifications from '@/assets/icons/notifications.svg';
 import message from '@/assets/icons/messages.svg';
 import { navMenu } from '@/styles/navMenu';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import useActions from '@/store/storeHooks/actions';
 
 const NavMenu: FC = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { logOut } = useActions();
-
   return (
     <div className={navMenu.wrapper}>
       <div className={navMenu.iconWrapper}>

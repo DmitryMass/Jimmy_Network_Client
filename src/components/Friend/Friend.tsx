@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import useTypedSelector from '@/store/storeHooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -43,11 +43,13 @@ const Friend: FC<IFriendProps> = ({
         }
       );
       const data = await addRemoveResponse.json();
+      console.log(data);
       dispatch(setFriends({ friends: data }));
     } catch (err) {
       console.log(`${err} friend didn't remove or add`);
     }
   };
+
   return (
     <div className={postStyles.friendWrapper}>
       <div
@@ -71,9 +73,9 @@ const Friend: FC<IFriendProps> = ({
         className='w-[25px] h-[25px] cursor-pointer transition-all duration-75 hover:scale-[1.1]'
       >
         {isFriend ? (
-          <img className='max-w-full' src={deleteFriend} alt='' />
+          <img className='max-w-full' src={deleteFriend} alt='deleteFriend' />
         ) : (
-          <img className='max-w-full' src={addFriend} alt='' />
+          <img className='max-w-full' src={addFriend} alt='addFriend' />
         )}
       </div>
     </div>
