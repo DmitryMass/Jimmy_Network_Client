@@ -14,6 +14,7 @@ interface IMainInfoProps {
 const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
   const [user, setUser] = useState<IUserType | null>(null);
   const token = useTypedSelector((state) => state.token);
+  const friends = useTypedSelector((state) => state.user.friends);
 
   const getUser = async () => {
     try {
@@ -46,7 +47,6 @@ const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
     occupation,
     viewedProfile,
     impressions,
-    friends,
   } = user;
 
   return (

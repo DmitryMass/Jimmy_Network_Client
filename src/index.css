@@ -12,7 +12,9 @@ body,
   width: 100%;
   font-family: 'Roboto', sans-serif;
 }
-
+body {
+  background-color: #2d1c3b;
+}
 h1,
 h2,
 h3,

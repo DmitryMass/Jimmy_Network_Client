@@ -11,7 +11,7 @@ import './App.css';
 const App: FC = () => {
   const userAuth = useTypedSelector((state) => state.token);
   return (
-    <div className='h-full bg-main '>
+    <div className='h-full'>
       <BrowserRouter>
         <Routes>
           <Route

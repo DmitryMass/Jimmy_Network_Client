@@ -8,7 +8,7 @@ module.exports = {
       spacing: {},
       backgroundColor: {
         main: '#2d1c3b',
-        card: '#8e13bdc2',
+        card: '#60387f',
         form: '#4d0a67',
         input: '#e8f0fe',
         hover: '#48305c',
