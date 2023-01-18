@@ -65,16 +65,15 @@ const Post: FC<IPostProps> = ({
           friendId={userId}
           name={`${firstName} ${lastName}`}
           location={location}
-          userImgPath={userImgPath}
+          imgPath={imgPath}
         />
         <p className={postStyles.description}>{description}</p>
-        {imgPath ? (
+        {userImgPath ? (
           <img
-            width='100%'
-            height='auto'
+            className='w-full max-h-[650px]'
             alt='post'
             style={{ borderRadius: '0.75rem', marginTop: '0.75rem' }}
-            src={`http://localhost:3005/assets/${imgPath}`}
+            src={`http://localhost:3005/assets/${userImgPath}`}
           />
         ) : null}
         <div className={`${postStyles.flexStart} gap-[40px]`}>

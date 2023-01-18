@@ -7,5 +7,5 @@ export const validationRegister = yup.object().shape({
   password: yup.string().label('Password').min(4).max(20).required(),
   location: yup.string().label('Location').required(),
   occupation: yup.string().label('Occupation').required(),
-  picture: yup.string().label('Picture').required(),
+  // picture: yup.string().label('Picture').required(),
 });

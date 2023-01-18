@@ -62,7 +62,7 @@ const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
         >
           <img
             className='w-[40px] h-[40px] rounded-full'
-            src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'
+            src={`http://localhost:3005/assets/${imgPath}`}
             alt='userImg'
           />
           <div>

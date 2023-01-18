@@ -24,7 +24,7 @@ const Home: FC = () => {
             </div>
           </div>
           <div className='grow'>
-            <AddPost />
+            <AddPost imgPath={imgPath} />
             <Posts userId={_id} />
           </div>
           <FriendList userId={_id} />

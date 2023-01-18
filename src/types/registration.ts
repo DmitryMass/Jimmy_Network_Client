@@ -5,5 +5,6 @@ export interface IRegistrationState {
   occupation: string;
   email: string;
   password: string;
-  picture: any;
+  picture: any | string;
+  imgPath?: any | string;
 }

@@ -7,22 +7,33 @@ import { formStyles } from '@/styles/formStyles';
 import { validationRegister } from '../validationSchemas/validationRegister';
 import { IRegistrationState } from '@/types/registration';
 
+const initialValue: IRegistrationState = {
+  firstName: '',
+  lastName: '',
+  location: '',
+  occupation: '',
+  email: '',
+  password: '',
+  picture: '',
+};
+
 const Form: FC = () => {
   const navigation = useNavigate();
+
   const handleSumbit = async (
     values: IRegistrationState,
     { resetForm }: any
   ) => {
-    const formData = new FormData();
-
+    const body = new FormData();
     Object.entries(values).forEach((item) => {
-      formData.append(item[0], item[1]);
+      body.append(item[0], item[1]);
     });
-    formData.append('imgPath', values.picture.name);
+    body.append('file', values.picture);
+
     try {
       const saveUser = await fetch('http://localhost:3005/auth/register', {
         method: 'POST',
-        body: formData,
+        body,
       });
       const response = await saveUser.json();
       if (response) {
@@ -33,6 +44,7 @@ const Form: FC = () => {
     }
     resetForm();
   };
+
   return (
     <div className={formStyles.wrapper}>
       <img
@@ -162,6 +174,7 @@ const Form: FC = () => {
                     User photo is required field
                   </span>
                 )}
+
                 <Dropzone
                   multiple={false}
                   onDrop={(acceptedFiles) =>
@@ -171,7 +184,7 @@ const Form: FC = () => {
                   {({ getRootProps, getInputProps }) => (
                     <div className={formStyles.inputDrop} {...getRootProps()}>
                       <input {...getInputProps()} />
-                      {!values.picture.name ? (
+                      {!values.picture ? (
                         <p className='text-white text-[12px]'>
                           Add your photo here
                         </p>
@@ -198,18 +211,6 @@ const Form: FC = () => {
       </div>
     </div>
   );
-};
-
-const initialValue = {
-  firstName: '',
-  lastName: '',
-  location: '',
-  occupation: '',
-  email: '',
-  password: '',
-  picture: {
-    name: '',
-  },
 };
 
 export default Form;

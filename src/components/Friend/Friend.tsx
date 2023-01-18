@@ -8,19 +8,16 @@ import deleteFriend from '@/assets/icons/catDelete.svg';
 import useActions from '@/store/storeHooks/actions';
 import { postStyles } from '@/styles/postStyles';
 
+import myLogo from '@/assets/images/logo.png';
+
 interface IFriendProps {
   friendId: string;
   name: string;
   location: string;
-  userImgPath: string;
+  imgPath: string;
 }
 
-const Friend: FC<IFriendProps> = ({
-  friendId,
-  name,
-  location,
-  userImgPath,
-}) => {
+const Friend: FC<IFriendProps> = ({ friendId, name, location, imgPath }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { setFriends } = useActions();
@@ -60,7 +57,7 @@ const Friend: FC<IFriendProps> = ({
       >
         <img
           className='w-[40px] h-[40px] rounded-full'
-          src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
+          src={imgPath ? `http://localhost:3005/assets/${imgPath}` : myLogo}
           alt='userimg'
         />
         <div>
