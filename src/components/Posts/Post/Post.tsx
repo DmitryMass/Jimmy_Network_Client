@@ -66,6 +66,7 @@ const Post: FC<IPostProps> = ({
           name={`${firstName} ${lastName}`}
           location={location}
           imgPath={imgPath}
+          post
         />
         <p className={postStyles.description}>{description}</p>
         {userImgPath ? (

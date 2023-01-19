@@ -1,7 +1,7 @@
 import { FC, memo, useEffect, useState } from 'react';
 import useTypedSelector from '@/store/storeHooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import addFriend from '@/assets/icons/catAdd.svg';
 import deleteFriend from '@/assets/icons/catDelete.svg';
@@ -15,9 +15,16 @@ interface IFriendProps {
   name: string;
   location: string;
   imgPath: string;
+  post?: boolean;
 }
 
-const Friend: FC<IFriendProps> = ({ friendId, name, location, imgPath }) => {
+const Friend: FC<IFriendProps> = ({
+  friendId,
+  name,
+  location,
+  imgPath,
+  post = false,
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { setFriends } = useActions();
@@ -29,6 +36,7 @@ const Friend: FC<IFriendProps> = ({ friendId, name, location, imgPath }) => {
 
   const addRemoveFriend = async () => {
     try {
+      if (_id === friendId) return;
       const addRemoveResponse = await fetch(
         `http://localhost:3005/users/${_id}/${friendId}`,
         {
@@ -65,16 +73,26 @@ const Friend: FC<IFriendProps> = ({ friendId, name, location, imgPath }) => {
           <p className={postStyles.friendLocation}>{location}</p>
         </div>
       </div>
-      <div
-        onClick={addRemoveFriend}
-        className='w-[25px] h-[25px] cursor-pointer transition-all duration-75 hover:scale-[1.1]'
-      >
-        {isFriend ? (
-          <img className='max-w-full' src={deleteFriend} alt='deleteFriend' />
-        ) : (
-          <img className='max-w-full' src={addFriend} alt='addFriend' />
-        )}
-      </div>
+      {friendId === _id ? null : (
+        <div>
+          {!post ? null : (
+            <div
+              onClick={() => addRemoveFriend()}
+              className='w-[25px] h-[25px] cursor-pointer transition-all duration-75 hover:scale-[1.1]'
+            >
+              {isFriend ? (
+                <img
+                  className='max-w-full'
+                  src={deleteFriend}
+                  alt='deleteFriend'
+                />
+              ) : (
+                <img className='max-w-full' src={addFriend} alt='addFriend' />
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

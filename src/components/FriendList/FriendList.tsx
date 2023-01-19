@@ -3,22 +3,19 @@ import useActions from '@/store/storeHooks/actions';
 import useTypedSelector from '@/store/storeHooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { Virtuoso } from 'react-virtuoso';
-import { useNavigate } from 'react-router-dom';
+import Friend from '../Friend/Friend';
+
+import './friendList.scss';
 
 interface IFriendListProps {
   userId: string;
-  isFriendFriends?: boolean;
 }
 
-const FriendList: FC<IFriendListProps> = ({
-  userId,
-  isFriendFriends = false,
-}) => {
+const FriendList: FC<IFriendListProps> = ({ userId }) => {
   const dispatch = useDispatch();
   const token = useTypedSelector((state) => state.token);
   const { setFriends } = useActions();
   const friends = useTypedSelector((state) => state.user.friends);
-  const navigate = useNavigate();
 
   const getFriends = async () => {
     try {
@@ -37,39 +34,24 @@ const FriendList: FC<IFriendListProps> = ({
   };
 
   useEffect(() => {
-    // if (isFriendFriends) {
     getFriends();
-    // }
-  }, []);
+  }, [userId]);
 
   return (
-    <div className='max-w-[250px] w-full bg-card max-h-[450px] rounded-[8px] p-[20px]'>
+    <div className='max-w-[260px] w-full bg-card max-h-[300px] rounded-[8px] p-[20px] overflow-y-hidden '>
       <h3 className='text-white font-medium text-[16px]'>Friends</h3>
-      {friends.length > 0 ? (
+      {friends && friends.length > 0 ? (
         <Virtuoso
-          className='w-full h-full mt-[10px]'
+          className='w-full h-full mt-[10px] friend__scroll'
           totalCount={friends.length}
           data={friends}
           itemContent={(index, friend) => (
-            <div className='mb-[20px] flex justify-between items-center gap-[5px]'>
-              <div
-                className='flex justify-start items-center gap-[5px]'
-                onClick={() => navigate(`/profile/${friend._id}`)}
-              >
-                <img
-                  className='w-[40px] h-[40px] rounded-full'
-                  src={`http://localhost:3005/assets/${friend.imgPath}`}
-                  alt='friendPhoto'
-                />
-                <div>
-                  <h5 className='text-white text-[14px] font-medium'>
-                    {friend.firstName} {friend.lastName}
-                  </h5>
-                  <p className='text-gray text-[12px]'>{friend.occupation}</p>
-                </div>
-              </div>
-              <span>add</span>
-            </div>
+            <Friend
+              friendId={friend._id}
+              imgPath={friend.imgPath}
+              name={`${friend.firstName} ${friend.lastName}`}
+              location={friend.location}
+            />
           )}
         />
       ) : null}

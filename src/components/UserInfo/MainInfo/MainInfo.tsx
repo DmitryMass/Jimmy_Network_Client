@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import { userInfo } from '@/styles/userInfoStyles';
 import addFriend from '@/assets/icons/addFriend.svg';
 import useTypedSelector from '@/store/storeHooks/useTypedSelector';
@@ -38,7 +38,7 @@ const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [userId]);
 
   if (!user) return null;
 
@@ -108,4 +108,4 @@ const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
   );
 };
 
-export default MainInfo;
+export default memo(MainInfo);

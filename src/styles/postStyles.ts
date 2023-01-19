@@ -4,8 +4,7 @@ export const postStyles = {
   likeCommentWrapper: 'transition-all duration-75 hover:scale-[1.05]',
   description: 'text-white text-[14px] mb-[10px]',
   friendWrapper: 'flex justify-between items-center mb-[15px]',
-  friendInfo:
-    'flex justify-start gap-[15px] cursor-pointer hover:scale-[1.05] transition-all duration-100',
+  friendInfo: 'flex justify-start gap-[15px] cursor-pointer ',
   friendName: 'text-white text-[14px] font-medium ',
   friendLocation: 'text-gray text-[12px]',
 };

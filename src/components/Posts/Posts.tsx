@@ -51,12 +51,12 @@ const Posts: FC<IPostsProps> = ({ userId, isProfile = false }) => {
     } else {
       getPosts();
     }
-  }, []);
+  }, [userId]);
 
   return (
-    <div>
+    <div className=' w-full h-full'>
       {posts
-        ? posts?.map((post: IPost) => <Post post={post} key={post._id} />)
+        ? posts.map((post: IPost) => <Post post={post} key={post._id} />)
         : null}
     </div>
   );

@@ -13,10 +13,10 @@ import FriendList from '@/components/FriendList/FriendList';
 const Home: FC = () => {
   const { _id, imgPath } = useTypedSelector((state) => state.user);
   return (
-    <div>
+    <div className='h-full'>
       <Navigation />
-      <div className='home__container'>
-        <div className='pt-[50px] flex gap-[25px]'>
+      <div className='home__container h-full'>
+        <div className='pt-[50px] flex gap-[25px] h-full'>
           <div className={userInfo.userInfo}>
             <div className={userInfo.wrapper}>
               <MainInfo userId={_id} imgPath={imgPath} />

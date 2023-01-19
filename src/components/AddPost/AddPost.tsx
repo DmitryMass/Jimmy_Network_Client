@@ -2,6 +2,10 @@ import { addPosts } from '@/styles/addPosts';
 import { FC, useState } from 'react';
 
 import imgIcon from '@/assets/icons/img-icon.svg';
+import Dropzone from 'react-dropzone';
+import useTypedSelector from '@/store/storeHooks/useTypedSelector';
+import { useDispatch } from 'react-redux';
+import useActions from '@/store/storeHooks/actions';
 
 interface IAddPostProps {
   imgPath: string;
@@ -9,6 +13,39 @@ interface IAddPostProps {
 
 const AddPost: FC<IAddPostProps> = ({ imgPath }) => {
   const [text, setText] = useState('');
+  const [isImg, setIsImg] = useState<any>(null);
+  const { _id } = useTypedSelector((state) => state.user);
+  const token = useTypedSelector((state) => state.token);
+  const dispatch = useDispatch();
+  const { setPosts } = useActions();
+
+  console.log(isImg);
+  const handleAddPost = async () => {
+    const body = new FormData();
+    body.append('userId', _id);
+    body.append('description', text);
+    if (isImg) {
+      body.append('file', isImg);
+      body.append('userImgPath', isImg ? isImg.name : '');
+    }
+    try {
+      const addPostResponse = await fetch('http://localhost:3005/posts', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body,
+      });
+      const posts = await addPostResponse.json();
+      console.log(posts);
+      dispatch(setPosts({ posts }));
+      setIsImg(null);
+      setText('');
+    } catch (err) {
+      console.log(`${err} create post error`);
+    }
+  };
+
   return (
     <div className={addPosts.wrapper}>
       <div className={addPosts.inputWrapper}>
@@ -25,11 +62,28 @@ const AddPost: FC<IAddPostProps> = ({ imgPath }) => {
           placeholder='Type your message'
         />
         <div className={addPosts.addImgWrapper}>
-          <img className='w-[28px] h-[28px]' src={imgIcon} alt='' />
+          <Dropzone
+            multiple={false}
+            onDrop={(acceptedFiles) => setIsImg(acceptedFiles[0])}
+          >
+            {({ getRootProps, getInputProps }) => (
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <img className='w-[28px] h-[28px]' src={imgIcon} alt='' />
+              </div>
+            )}
+          </Dropzone>
         </div>
       </div>
       <div className={addPosts.publishWrapper}>
-        <button className={addPosts.sendBtn}>Publish</button>
+        {isImg && (
+          <span className='text-white text-[12px] text-ellipsis overflow-hidden whitespace-nowrap mr-[20px]'>
+            {isImg.name}
+          </span>
+        )}
+        <button onClick={handleAddPost} className={addPosts.sendBtn}>
+          Publish
+        </button>
       </div>
     </div>
   );

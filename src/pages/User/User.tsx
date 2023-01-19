@@ -1,3 +1,4 @@
+import FriendList from '@/components/FriendList/FriendList';
 import Navigation from '@/components/Navigation/Navigation';
 import Posts from '@/components/Posts/Posts';
 import MainInfo from '@/components/UserInfo/MainInfo/MainInfo';
@@ -11,8 +12,8 @@ import { useParams } from 'react-router-dom';
 import './user.scss';
 
 const User: FC = () => {
-  const { userId } = useParams();
   const [user, setUser] = useState<IUserType | null>(null);
+  const { userId } = useParams();
   const token = useTypedSelector((state) => state.token);
 
   const getUser = async () => {
@@ -35,7 +36,7 @@ const User: FC = () => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [userId]);
 
   if (!user) return null;
 
@@ -53,6 +54,7 @@ const User: FC = () => {
           <div className='grow'>
             <Posts userId={userId!} isProfile />
           </div>
+          <FriendList userId={userId!} />
         </div>
       </div>
     </>
