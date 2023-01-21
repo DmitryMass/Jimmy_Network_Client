@@ -11,6 +11,7 @@ import unlikeLogo from '@/assets/icons/unlikeLogo.svg';
 import { postStyles } from '@/styles/postStyles';
 import AddComment from '@/components/AddComment/AddComment';
 import Comment from '@/components/Comment/Comment';
+import deleteIcon from '@/assets/icons/deleteIcon.svg';
 
 interface IPostProps {
   post: IPost;
@@ -31,12 +32,14 @@ const Post: FC<IPostProps> = ({
   },
 }) => {
   const dispatch = useDispatch();
-  const { setOnePost } = useActions();
+  const { setOnePost, deletePost } = useActions();
   const [usersComments, setUsersComments] = useState(false);
   const token = useTypedSelector((state) => state.token);
   const loggedInUserId = useTypedSelector((state) => state.user._id);
+  const user = useTypedSelector((state) => state.user);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
+
   const changeLike = async () => {
     try {
       const changeResponse = await fetch(
@@ -58,16 +61,41 @@ const Post: FC<IPostProps> = ({
     }
   };
 
+  const removePost = async (id: string) => {
+    try {
+      const deleteResponse = await fetch(
+        `http://localhost:3005/posts/${id}/posts`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (deleteResponse.status === 200) {
+        dispatch(deletePost({ _id }));
+      }
+    } catch (err) {
+      console.log(`${err} client: post doesn't delete`);
+    }
+  };
+
   return (
     <>
       <div className={postStyles.wrapper}>
-        <Friend
-          friendId={userId}
-          name={`${firstName} ${lastName}`}
-          location={location}
-          imgPath={imgPath}
-          post
-        />
+        <div className='flex justify-between w-full'>
+          <Friend
+            friendId={userId}
+            name={`${firstName} ${lastName}`}
+            location={location}
+            imgPath={imgPath}
+          />
+          {user._id === userId ? (
+            <div onClick={() => removePost(_id)} className='cursor-pointer'>
+              <img className='w-[25px] h-[25px]' src={deleteIcon} alt='' />
+            </div>
+          ) : null}
+        </div>
         <p className={postStyles.description}>{description}</p>
         {userImgPath ? (
           <img

@@ -19,7 +19,6 @@ const AddPost: FC<IAddPostProps> = ({ imgPath }) => {
   const dispatch = useDispatch();
   const { setPosts } = useActions();
 
-  console.log(isImg);
   const handleAddPost = async () => {
     const body = new FormData();
     body.append('userId', _id);

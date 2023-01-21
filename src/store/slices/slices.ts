@@ -48,6 +48,9 @@ export const authSlice = createSlice({
       });
       state.posts = updatedPosts;
     },
+    deletePost: (state, { payload }) => {
+      state.posts = state.posts.filter((post) => post._id !== payload._id);
+    },
   },
 });
 

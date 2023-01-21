@@ -6,6 +6,8 @@ import locationLogo from '@/assets/icons/location.svg';
 import profession from '@/assets/icons/profession.svg';
 import { IUserType } from '@/types/userType';
 import { useNavigate } from 'react-router-dom';
+import useActions from '@/store/storeHooks/actions';
+import { useDispatch } from 'react-redux';
 
 interface IMainInfoProps {
   userId: string;
@@ -71,13 +73,6 @@ const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
             </h5>
             <p className={userInfo.userFriends}>{friends?.length} friends</p>
           </div>
-        </div>
-        <div className={userInfo.addFriend}>
-          <img
-            className='w-[30px] h-[30px]'
-            src={addFriend}
-            alt='addFriend logo'
-          />
         </div>
       </div>
       <div className='py-[15px] border-cardBorder border-b-2'>

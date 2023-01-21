@@ -15,28 +15,21 @@ interface IFriendProps {
   name: string;
   location: string;
   imgPath: string;
-  post?: boolean;
 }
 
-const Friend: FC<IFriendProps> = ({
-  friendId,
-  name,
-  location,
-  imgPath,
-  post = false,
-}) => {
-  const dispatch = useDispatch();
+const Friend: FC<IFriendProps> = ({ friendId, name, location, imgPath }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { setFriends } = useActions();
   const { _id } = useTypedSelector((state) => state.user);
   const token = useTypedSelector((state) => state.token);
   const friends = useTypedSelector((state) => state.user.friends);
+  const { userId } = useParams();
 
   const isFriend = friends?.find((friend: any) => friend._id === friendId);
 
   const addRemoveFriend = async () => {
     try {
-      if (_id === friendId) return;
       const addRemoveResponse = await fetch(
         `http://localhost:3005/users/${_id}/${friendId}`,
         {
@@ -48,7 +41,6 @@ const Friend: FC<IFriendProps> = ({
         }
       );
       const data = await addRemoveResponse.json();
-      console.log(data);
       dispatch(setFriends({ friends: data }));
     } catch (err) {
       console.log(`${err} friend didn't remove or add`);
@@ -73,23 +65,15 @@ const Friend: FC<IFriendProps> = ({
           <p className={postStyles.friendLocation}>{location}</p>
         </div>
       </div>
-      {friendId === _id ? null : (
-        <div>
-          {!post ? null : (
-            <div
-              onClick={() => addRemoveFriend()}
-              className='w-[25px] h-[25px] cursor-pointer transition-all duration-75 hover:scale-[1.1]'
-            >
-              {isFriend ? (
-                <img
-                  className='max-w-full'
-                  src={deleteFriend}
-                  alt='deleteFriend'
-                />
-              ) : (
-                <img className='max-w-full' src={addFriend} alt='addFriend' />
-              )}
-            </div>
+      {_id === friendId || userId ? null : (
+        <div
+          onClick={() => addRemoveFriend()}
+          className='w-[25px] h-[25px] cursor-pointer transition-all duration-75 hover:scale-[1.1]'
+        >
+          {isFriend ? (
+            <img className='max-w-full' src={deleteFriend} alt='deleteFriend' />
+          ) : (
+            <img className='max-w-full' src={addFriend} alt='addFriend' />
           )}
         </div>
       )}
