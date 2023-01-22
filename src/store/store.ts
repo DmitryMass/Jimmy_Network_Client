@@ -1,3 +1,5 @@
+import { addPostApi } from './api/postApi';
+import { getUserApi, getFriendsApi } from './api/getApi';
 import { loginApi, registerApi } from './api/authApi';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
@@ -25,6 +27,9 @@ const reducers = combineReducers({
   authSlice: persistReducer(userPersistConfig, authSliceReducer),
   [loginApi.reducerPath]: loginApi.reducer,
   [registerApi.reducerPath]: registerApi.reducer,
+  [getUserApi.reducerPath]: getUserApi.reducer,
+  [addPostApi.reducerPath]: addPostApi.reducer,
+  [getFriendsApi.reducerPath]: getFriendsApi.reducer,
 });
 
 const store = configureStore({
@@ -34,7 +39,13 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(loginApi.middleware, registerApi.middleware),
+    }).concat(
+      loginApi.middleware,
+      registerApi.middleware,
+      getUserApi.middleware,
+      addPostApi.middleware,
+      getFriendsApi.middleware
+    ),
 });
 
 export const persister = persistStore(store);

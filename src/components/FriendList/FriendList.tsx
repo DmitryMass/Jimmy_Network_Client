@@ -6,6 +6,7 @@ import { Virtuoso } from 'react-virtuoso';
 import Friend from '../Friend/Friend';
 
 import './friendList.scss';
+import { useGetFriendsQuery } from '@/store/api/getApi';
 
 interface IFriendListProps {
   userId: string;
@@ -16,26 +17,15 @@ const FriendList: FC<IFriendListProps> = ({ userId }) => {
   const token = useTypedSelector((state) => state.authSlice.token);
   const { setFriends } = useActions();
   const friends = useTypedSelector((state) => state.authSlice.user.friends);
-
-  const getFriends = async () => {
-    try {
-      const friendsResponse = await fetch(
-        `http://localhost:3005/users/${userId}/friends`,
-        {
-          method: 'GET',
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const data = await friendsResponse.json();
-      dispatch(setFriends({ friends: data }));
-    } catch (err) {
-      console.log(`${err} cannot get friends list`);
-    }
-  };
+  const {
+    data = null,
+    isLoading,
+    isError,
+  } = useGetFriendsQuery({ userId, token });
 
   useEffect(() => {
-    getFriends();
-  }, [userId]);
+    data && dispatch(setFriends({ friends: data }));
+  }, [data]);
 
   return (
     <div className='max-w-[260px] w-full bg-card max-h-[300px] rounded-[8px] p-[20px] overflow-y-hidden '>

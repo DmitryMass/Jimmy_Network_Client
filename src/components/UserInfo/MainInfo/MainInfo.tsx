@@ -1,13 +1,12 @@
-import { FC, memo, useEffect, useState } from 'react';
+import { FC, memo } from 'react';
 import { userInfo } from '@/styles/userInfoStyles';
-import addFriend from '@/assets/icons/addFriend.svg';
 import useTypedSelector from '@/store/storeHooks/useTypedSelector';
 import locationLogo from '@/assets/icons/location.svg';
 import profession from '@/assets/icons/profession.svg';
-import { IUserType } from '@/types/userType';
 import { useNavigate } from 'react-router-dom';
-import useActions from '@/store/storeHooks/actions';
-import { useDispatch } from 'react-redux';
+import { useGetUserQuery } from '@/store/api/getApi';
+import RequestError from '@/components/RequestError/RequestError';
+import RequestLoading from '@/components/RequestLoading/RequestLoading';
 
 interface IMainInfoProps {
   userId: string;
@@ -16,34 +15,9 @@ interface IMainInfoProps {
 
 const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<IUserType | null>(null);
   const token = useTypedSelector((state) => state.authSlice.token);
   const friends = useTypedSelector((state) => state.authSlice.user.friends);
-
-  const getUser = async () => {
-    try {
-      const userResponse = await fetch(
-        `http://localhost:3005/users/${userId}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = await userResponse.json();
-      setUser(data);
-    } catch (err) {
-      console.log(`${err} fail getting userdata.`);
-    }
-  };
-
-  useEffect(() => {
-    getUser();
-  }, [userId]);
-
-  if (!user) return null;
-
+  const { data = {}, isLoading, isError } = useGetUserQuery({ userId, token });
   const {
     firstName,
     lastName,
@@ -51,11 +25,13 @@ const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
     occupation,
     viewedProfile,
     impressions,
-  } = user;
+  } = data;
 
   return (
     <>
       <div className={userInfo.box}>
+        {isError ? <RequestError isError={isError} /> : null}
+        {isLoading ? <RequestLoading /> : null}
         <div
           className={userInfo.user}
           onClick={() => {

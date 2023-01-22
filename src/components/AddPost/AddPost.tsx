@@ -6,6 +6,7 @@ import Dropzone from 'react-dropzone';
 import useTypedSelector from '@/store/storeHooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import useActions from '@/store/storeHooks/actions';
+import { useAddPostMutation } from '@/store/api/postApi';
 
 interface IAddPostProps {
   imgPath: string;
@@ -18,6 +19,7 @@ const AddPost: FC<IAddPostProps> = ({ imgPath }) => {
   const token = useTypedSelector((state) => state.authSlice.token);
   const dispatch = useDispatch();
   const { setPosts } = useActions();
+  const [addPost, { isLoading, isError }] = useAddPostMutation();
 
   const handleAddPost = async () => {
     const body = new FormData();
@@ -28,16 +30,10 @@ const AddPost: FC<IAddPostProps> = ({ imgPath }) => {
       body.append('userImgPath', isImg ? isImg.name : '');
     }
     try {
-      const addPostResponse = await fetch('http://localhost:3005/posts', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body,
-      });
-      const posts = await addPostResponse.json();
-      console.log(posts);
-      dispatch(setPosts({ posts }));
+      const posts: any = await addPost({ data: body, token });
+      if (posts.data) {
+        dispatch(setPosts({ posts: posts.data }));
+      }
       setIsImg(null);
       setText('');
     } catch (err) {
