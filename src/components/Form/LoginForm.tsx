@@ -7,31 +7,29 @@ import { validationLogin } from '../validationSchemas/validationLogin';
 import { ILoginInitialValue } from '@/types/login';
 import { useDispatch } from 'react-redux';
 import useActions from '@/store/storeHooks/actions';
+import { useLoginApiMutation } from '@/store/api/authApi';
+import RequestError from '../RequestError/RequestError';
+import RequestLoading from '../RequestLoading/RequestLoading';
 
 const LoginForm: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { login } = useActions();
+  const [loginApi, { isLoading, isError }] = useLoginApiMutation();
+
   const handleSumbit = async (
     values: ILoginInitialValue,
     { resetForm }: any
   ) => {
     try {
-      const loginUser = await fetch('http://localhost:3005/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
-      });
-      const isLogged = await loginUser.json();
+      const isLogged: any = await loginApi(values);
       resetForm();
-      if (isLogged) {
-        dispatch(
-          login({
-            user: isLogged.user,
-            token: isLogged.token,
-          })
-        );
-      }
+      dispatch(
+        login({
+          user: isLogged.data.user,
+          token: isLogged.data.token,
+        })
+      );
       navigate('/home');
     } catch (err) {
       console.log(`${err} login error.`);
@@ -39,73 +37,77 @@ const LoginForm: FC = () => {
   };
 
   return (
-    <div className={`${formStyles.wrapper} mt-[50px]`}>
-      <img
-        className='w-[40px] h-[40px] mx-auto mb-[20px]'
-        src={loginIcon}
-        alt=''
-      />
-      <Formik
-        initialValues={initialValue}
-        validationSchema={validationLogin}
-        onSubmit={handleSumbit}
-      >
-        {({
-          handleSubmit,
-          handleChange,
-          handleBlur,
-          values,
-          errors,
-          touched,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <div className={formStyles.formWrapper}>
-              <div className={formStyles.inputWrapper}>
-                {touched.email && errors.email && (
-                  <span className={formStyles.errorSpan}>{errors.email}</span>
-                )}
-                <Field
-                  className={formStyles.input}
-                  id='email'
-                  type='email'
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.email}
-                  name='email'
-                  placeholder='Email'
-                />
+    <div className='h-full'>
+      {isError ? <RequestError isError={isError} /> : null}
+      {isLoading ? <RequestLoading /> : null}
+      <div className={`${formStyles.wrapper} mt-[50px]`}>
+        <img
+          className='w-[40px] h-[40px] mx-auto mb-[20px]'
+          src={loginIcon}
+          alt=''
+        />
+        <Formik
+          initialValues={initialValue}
+          validationSchema={validationLogin}
+          onSubmit={handleSumbit}
+        >
+          {({
+            handleSubmit,
+            handleChange,
+            handleBlur,
+            values,
+            errors,
+            touched,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <div className={formStyles.formWrapper}>
+                <div className={formStyles.inputWrapper}>
+                  {touched.email && errors.email && (
+                    <span className={formStyles.errorSpan}>{errors.email}</span>
+                  )}
+                  <Field
+                    className={formStyles.input}
+                    id='email'
+                    type='email'
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                    name='email'
+                    placeholder='Email'
+                  />
+                </div>
+                <div className={formStyles.inputWrapper}>
+                  {touched.password && errors.password && (
+                    <span className={formStyles.errorSpan}>
+                      {errors.password}
+                    </span>
+                  )}
+                  <Field
+                    className={formStyles.input}
+                    id='password'
+                    type='password'
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.password}
+                    name='password'
+                    placeholder='Password'
+                  />
+                </div>
               </div>
-              <div className={formStyles.inputWrapper}>
-                {touched.password && errors.password && (
-                  <span className={formStyles.errorSpan}>
-                    {errors.password}
-                  </span>
-                )}
-                <Field
-                  className={formStyles.input}
-                  id='password'
-                  type='password'
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.password}
-                  name='password'
-                  placeholder='Password'
-                />
-              </div>
-            </div>
-            <button
-              className={`${formStyles.btnSubmit} mt-[15px]`}
-              type='submit'
-            >
-              Sign in
-            </button>
-          </form>
-        )}
-      </Formik>
-      <div>
-        <Link className={formStyles.linkLogin} to='/register'>
-          Don't have an account? Sign up here.
-        </Link>
+              <button
+                className={`${formStyles.btnSubmit} mt-[15px]`}
+                type='submit'
+              >
+                Sign in
+              </button>
+            </form>
+          )}
+        </Formik>
+        <div>
+          <Link className={formStyles.linkLogin} to='/register'>
+            Don't have an account? Sign up here.
+          </Link>
+        </div>
       </div>
     </div>
   );

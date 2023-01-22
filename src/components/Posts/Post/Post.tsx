@@ -34,9 +34,9 @@ const Post: FC<IPostProps> = ({
   const dispatch = useDispatch();
   const { setOnePost, deletePost } = useActions();
   const [usersComments, setUsersComments] = useState(false);
-  const token = useTypedSelector((state) => state.token);
-  const loggedInUserId = useTypedSelector((state) => state.user._id);
-  const user = useTypedSelector((state) => state.user);
+  const token = useTypedSelector((state) => state.authSlice.token);
+  const loggedInUserId = useTypedSelector((state) => state.authSlice.user._id);
+  const user = useTypedSelector((state) => state.authSlice.user);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
 

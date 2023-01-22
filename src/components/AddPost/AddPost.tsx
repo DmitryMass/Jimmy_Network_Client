@@ -14,8 +14,8 @@ interface IAddPostProps {
 const AddPost: FC<IAddPostProps> = ({ imgPath }) => {
   const [text, setText] = useState('');
   const [isImg, setIsImg] = useState<any>(null);
-  const { _id } = useTypedSelector((state) => state.user);
-  const token = useTypedSelector((state) => state.token);
+  const { _id } = useTypedSelector((state) => state.authSlice.user);
+  const token = useTypedSelector((state) => state.authSlice.token);
   const dispatch = useDispatch();
   const { setPosts } = useActions();
 

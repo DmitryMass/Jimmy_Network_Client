@@ -12,8 +12,8 @@ interface IPostsProps {
 
 const Posts: FC<IPostsProps> = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
-  const posts = useTypedSelector((state) => state.posts);
-  const token = useTypedSelector((state) => state.token);
+  const posts = useTypedSelector((state) => state.authSlice.posts);
+  const token = useTypedSelector((state) => state.authSlice.token);
   const { setPosts } = useActions();
 
   const getPosts = async () => {

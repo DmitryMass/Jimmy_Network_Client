@@ -13,9 +13,9 @@ interface IFriendListProps {
 
 const FriendList: FC<IFriendListProps> = ({ userId }) => {
   const dispatch = useDispatch();
-  const token = useTypedSelector((state) => state.token);
+  const token = useTypedSelector((state) => state.authSlice.token);
   const { setFriends } = useActions();
-  const friends = useTypedSelector((state) => state.user.friends);
+  const friends = useTypedSelector((state) => state.authSlice.user.friends);
 
   const getFriends = async () => {
     try {

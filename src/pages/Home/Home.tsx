@@ -11,8 +11,7 @@ import './home.scss';
 import FriendList from '@/components/FriendList/FriendList';
 
 const Home: FC = () => {
-  const { _id, imgPath } = useTypedSelector((state) => state.user);
-
+  const { _id, imgPath } = useTypedSelector((state) => state.authSlice.user);
   return (
     <div className='h-full'>
       <Navigation />

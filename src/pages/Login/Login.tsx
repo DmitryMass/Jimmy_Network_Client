@@ -6,7 +6,7 @@ import './login.scss';
 
 const Login: FC = () => {
   return (
-    <div>
+    <div className='relative h-full'>
       <Navigation />
       <div className='login__container'>
         <LoginForm />

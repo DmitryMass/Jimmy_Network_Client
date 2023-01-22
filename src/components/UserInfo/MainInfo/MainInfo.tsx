@@ -17,8 +17,8 @@ interface IMainInfoProps {
 const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<IUserType | null>(null);
-  const token = useTypedSelector((state) => state.token);
-  const friends = useTypedSelector((state) => state.user.friends);
+  const token = useTypedSelector((state) => state.authSlice.token);
+  const friends = useTypedSelector((state) => state.authSlice.user.friends);
 
   const getUser = async () => {
     try {

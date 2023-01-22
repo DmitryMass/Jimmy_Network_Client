@@ -6,6 +6,9 @@ import register from '@/assets/icons/register.svg';
 import { formStyles } from '@/styles/formStyles';
 import { validationRegister } from '../validationSchemas/validationRegister';
 import { IRegistrationState } from '@/types/registration';
+import { useRegisterApiMutation } from '@/store/api/authApi';
+import RequestError from '../RequestError/RequestError';
+import RequestLoading from '../RequestLoading/RequestLoading';
 
 const initialValue: IRegistrationState = {
   firstName: '',
@@ -19,6 +22,7 @@ const initialValue: IRegistrationState = {
 
 const Form: FC = () => {
   const navigation = useNavigate();
+  const [registerApi, { isError, isLoading }] = useRegisterApiMutation();
 
   const handleSumbit = async (
     values: IRegistrationState,
@@ -29,16 +33,12 @@ const Form: FC = () => {
       body.append(item[0], item[1]);
     });
     body.append('file', values.picture);
-
     try {
-      const saveUser = await fetch('http://localhost:3005/auth/register', {
-        method: 'POST',
-        body,
-      });
-      const response = await saveUser.json();
-      if (response) {
+      const saveUser: any = await registerApi(body);
+      if (saveUser.data.savedUser) {
         navigation('/');
       }
+      resetForm();
     } catch (err) {
       console.log(`${err} registration error.`);
     }
@@ -47,6 +47,8 @@ const Form: FC = () => {
 
   return (
     <div className={formStyles.wrapper}>
+      {isError ? <RequestError isError={isError} /> : null}
+      {isLoading ? <RequestLoading /> : null}
       <img
         className='w-[40px] h-[40px] mx-auto mb-[20px]'
         src={register}

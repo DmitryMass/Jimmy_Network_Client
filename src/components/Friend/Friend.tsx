@@ -21,9 +21,9 @@ const Friend: FC<IFriendProps> = ({ friendId, name, location, imgPath }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { setFriends } = useActions();
-  const { _id } = useTypedSelector((state) => state.user);
-  const token = useTypedSelector((state) => state.token);
-  const friends = useTypedSelector((state) => state.user.friends);
+  const { _id } = useTypedSelector((state) => state.authSlice.user);
+  const token = useTypedSelector((state) => state.authSlice.token);
+  const friends = useTypedSelector((state) => state.authSlice.user.friends);
   const { userId } = useParams();
 
   const isFriend = friends?.find((friend: any) => friend._id === friendId);

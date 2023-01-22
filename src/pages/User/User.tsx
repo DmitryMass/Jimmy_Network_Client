@@ -14,7 +14,7 @@ import './user.scss';
 const User: FC = () => {
   const [user, setUser] = useState<IUserType | null>(null);
   const { userId } = useParams();
-  const token = useTypedSelector((state) => state.token);
+  const token = useTypedSelector((state) => state.authSlice.token);
 
   const getUser = async () => {
     try {

@@ -9,7 +9,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 
 const App: FC = () => {
-  const userAuth = useTypedSelector((state) => state.token);
+  const userAuth = useTypedSelector((state) => state.authSlice.token);
   return (
     <div className='h-full'>
       <BrowserRouter>
