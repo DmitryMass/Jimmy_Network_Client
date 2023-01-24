@@ -1,6 +1,7 @@
 export const userInfo = {
-  userInfo: 'max-w-[250px] w-full',
-  wrapper: 'w-full p-[20px] shadow-card bg-card rounded-[8px]',
+  userInfo: 'w-full sm:max-w-[250px] flex flex-col h-full',
+  wrapper:
+    'w-full  sm:max-w-[250px] p-[20px] shadow-card bg-card rounded-[8px]',
   sameFlexBetween: 'flex justify-between items-center',
   sameFlexTogether: 'flex justify-start items-center',
   box: 'flex items-center justify-between border-b-2 pb-[10px] border-cardBorder',

@@ -3,6 +3,7 @@ import useTypedSelector from '@/store/storeHooks/useTypedSelector';
 import { IPost } from '@/types/post';
 import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Virtuoso } from 'react-virtuoso';
 import Post from './Post/Post';
 
 interface IPostsProps {
@@ -54,10 +55,24 @@ const Posts: FC<IPostsProps> = ({ userId, isProfile = false }) => {
   }, [userId]);
 
   return (
-    <div className=' w-full h-full'>
-      {posts
-        ? posts.map((post: IPost) => <Post post={post} key={post._id} />)
-        : null}
+    <div className=' w-full h-screen sm:h-full pb-[30px] sm:pb-[155px]'>
+      {posts ? (
+        <Virtuoso
+          className='w-full h-full  friend__scroll'
+          totalCount={posts.length + 1}
+          data={posts}
+          components={{
+            Footer: () => {
+              return (
+                <span className='mt-1'>
+                  <br />
+                </span>
+              );
+            },
+          }}
+          itemContent={(index, post: IPost) => <Post post={post} />}
+        />
+      ) : null}
     </div>
   );
 };

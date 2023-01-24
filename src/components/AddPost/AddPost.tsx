@@ -69,6 +69,12 @@ const AddPost: FC<IAddPostProps> = ({ imgPath }) => {
             )}
           </Dropzone>
         </div>
+        <button
+          onClick={handleAddPost}
+          className={`${addPosts.sendBtn} hidden md:inline`}
+        >
+          {isLoading ? 'Loading...' : 'Publish'}
+        </button>
       </div>
       <div className={addPosts.publishWrapper}>
         {isImg && (
@@ -76,8 +82,11 @@ const AddPost: FC<IAddPostProps> = ({ imgPath }) => {
             {isImg.name}
           </span>
         )}
-        <button onClick={handleAddPost} className={addPosts.sendBtn}>
-          Publish
+        <button
+          onClick={handleAddPost}
+          className={`${addPosts.sendBtn} md:hidden inline`}
+        >
+          {isLoading ? 'Loading...' : 'Publish'}
         </button>
       </div>
     </div>

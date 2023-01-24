@@ -28,13 +28,22 @@ const FriendList: FC<IFriendListProps> = ({ userId }) => {
   }, [data]);
 
   return (
-    <div className='max-w-[260px] w-full bg-card max-h-[300px] rounded-[8px] p-[20px] overflow-y-hidden '>
+    <div className=' mt-[30px] shadow-card w-full  sm:max-w-[250px]  bg-card h-[200px]  rounded-[8px] p-[20px] overflow-y-hidden '>
       <h3 className='text-white font-medium text-[16px]'>Friends</h3>
       {friends && friends.length > 0 ? (
         <Virtuoso
           className='w-full h-full mt-[10px] friend__scroll'
-          totalCount={friends.length}
+          totalCount={friends.length + 1}
           data={friends}
+          components={{
+            Footer: () => {
+              return (
+                <span className='mt-1'>
+                  <br />
+                </span>
+              );
+            },
+          }}
           itemContent={(index, friend) => (
             <Friend
               friendId={friend._id}

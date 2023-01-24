@@ -82,7 +82,7 @@ const Post: FC<IPostProps> = ({
 
   return (
     <>
-      <div className={postStyles.wrapper}>
+      <div className={`${postStyles.wrapper} shadow-card`}>
         <div className='flex justify-between w-full'>
           <Friend
             friendId={userId}
@@ -99,7 +99,7 @@ const Post: FC<IPostProps> = ({
         <p className={postStyles.description}>{description}</p>
         {userImgPath ? (
           <img
-            className='w-full max-h-[650px]'
+            className='max-w-full max-h-[650px]'
             alt='post'
             style={{ borderRadius: '0.75rem', marginTop: '0.75rem' }}
             src={`http://localhost:3005/assets/${userImgPath}`}

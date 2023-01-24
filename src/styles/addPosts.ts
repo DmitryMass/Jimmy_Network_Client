@@ -3,10 +3,10 @@ export const addPosts = {
   inputWrapper:
     'flex justify-start items-center gap-[15px] pb-[10px] mb-[10px] relative border-b-[1px] border-cardBorder',
   field:
-    'h-[50px]  outline border-0 rounded-[18px] py-[10px] px-[20px] text-[16px] bg-main text-white placeholder-[#bcbcbc] outline-0 focus:outline-1 focus:outline-[#bcbcbc] w-full pr-[50px]',
+    'h-[40px]  outline border-0 rounded-[18px] py-[5px] px-[20px] text-[14px] bg-main text-white  placeholder-[#bcbcbc] outline-0 focus:outline-1 focus:outline-[#bcbcbc] w-full pr-[50px]',
   publishWrapper: 'text-right',
   addImgWrapper:
-    'flex items-center gap-[5px] transition-all duration-100 hover:scale-[1.05] cursor-pointer absolute top-[10px] right-[10px] ',
+    'flex items-center gap-[5px] transition-all duration-100 hover:scale-[1.05] cursor-pointer absolute top-[10px] md:right-[115px] right-[10px] ',
   sendBtn:
-    'py-[8px] px-[20px] rounded-[18px] text-[12px] uppercase text-white bg-main hover:bg-hover ',
+    'py-[8px] h-[40px] px-[20px] rounded-[18px] text-[12px] uppercase text-white bg-main hover:bg-hover ',
 };

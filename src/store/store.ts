@@ -1,7 +1,8 @@
 import { addPostApi } from './api/postApi';
-import { getUserApi, getFriendsApi } from './api/getApi';
+import { getUserApi, getFriendsApi, getPostsApi } from './api/getApi';
 import { loginApi, registerApi } from './api/authApi';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 import {
   persistStore,
   persistReducer,
@@ -30,6 +31,7 @@ const reducers = combineReducers({
   [getUserApi.reducerPath]: getUserApi.reducer,
   [addPostApi.reducerPath]: addPostApi.reducer,
   [getFriendsApi.reducerPath]: getFriendsApi.reducer,
+  [getPostsApi.reducerPath]: getPostsApi.reducer,
 });
 
 const store = configureStore({
@@ -44,9 +46,12 @@ const store = configureStore({
       registerApi.middleware,
       getUserApi.middleware,
       addPostApi.middleware,
-      getFriendsApi.middleware
+      getFriendsApi.middleware,
+      getPostsApi.middleware
     ),
 });
+
+setupListeners(store.dispatch);
 
 export const persister = persistStore(store);
 export default store;
