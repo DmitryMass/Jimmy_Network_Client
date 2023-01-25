@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const URL = 'http://localhost:3005';
+// const URL = 'http://localhost:3005';
+const URL = 'https://jimmy-network-server.onrender.com';
+
 
 export const addPostApi = createApi({
   reducerPath: 'addPostApi',

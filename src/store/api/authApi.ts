@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const URL = 'http://localhost:3005/auth';
+// const URL = 'http://localhost:3005/auth';
+const URL = 'https://jimmy-network-server.onrender.com';
 
 export const loginApi = createApi({
   reducerPath: 'loginApi',
@@ -9,7 +10,7 @@ export const loginApi = createApi({
   endpoints: (build) => ({
     loginApi: build.mutation({
       query: (body) => ({
-        url: '/login',
+        url: '/auth/login',
         method: 'POST',
         body,
       }),
@@ -25,7 +26,7 @@ export const registerApi = createApi({
   endpoints: (build) => ({
     registerApi: build.mutation({
       query: (body) => ({
-        url: '/register',
+        url: '/auth/register',
         method: 'POST',
         body,
       }),

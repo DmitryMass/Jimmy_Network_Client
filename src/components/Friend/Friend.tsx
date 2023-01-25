@@ -31,7 +31,7 @@ const Friend: FC<IFriendProps> = ({ friendId, name, location, imgPath }) => {
   const addRemoveFriend = async () => {
     try {
       const addRemoveResponse = await fetch(
-        `http://localhost:3005/users/${_id}/${friendId}`,
+        `https://jimmy-network-server.onrender.com/users/${_id}/${friendId}`,
         {
           method: 'PATCH',
           headers: {
@@ -57,9 +57,18 @@ const Friend: FC<IFriendProps> = ({ friendId, name, location, imgPath }) => {
       >
         <img
           className='w-[40px] h-[40px] rounded-full'
-          src={imgPath ? `http://localhost:3005/assets/${imgPath}` : myLogo}
+          src={
+            imgPath
+              ? `https://jimmy-network-server.onrender.com/assets/${imgPath}`
+              : myLogo
+          }
           alt='userimg'
         />
+        {/* <img
+          className='w-[40px] h-[40px] rounded-full'
+          src={imgPath ? `http://localhost:3005/assets/${imgPath}` : myLogo}
+          alt='userimg'
+        /> */}
         <div>
           <h4 className={postStyles.friendName}>{name}</h4>
           <p className={postStyles.friendLocation}>{location}</p>

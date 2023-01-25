@@ -40,9 +40,14 @@ const MainInfo: FC<IMainInfoProps> = ({ userId, imgPath }) => {
         >
           <img
             className='w-[40px] h-[40px] rounded-full'
-            src={`http://localhost:3005/assets/${imgPath}`}
+            src={`https://jimmy-network-server.onrender.com/assets/${imgPath}`}
             alt='userImg'
           />
+          {/* <img
+            className='w-[40px] h-[40px] rounded-full'
+            src={`http://localhost:3005/assets/${imgPath}`}
+            alt='userImg'
+          /> */}
           <div>
             <h5 className={userInfo.userName}>
               {firstName} {lastName}

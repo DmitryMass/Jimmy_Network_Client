@@ -43,7 +43,7 @@ const Post: FC<IPostProps> = ({
   const changeLike = async () => {
     try {
       const changeResponse = await fetch(
-        `http://localhost:3005/posts/${_id}/like`,
+        `https://jimmy-network-server.onrender.com/posts/${_id}/like`,
         {
           method: 'PATCH',
           headers: {
@@ -64,7 +64,7 @@ const Post: FC<IPostProps> = ({
   const removePost = async (id: string) => {
     try {
       const deleteResponse = await fetch(
-        `http://localhost:3005/posts/${id}/posts`,
+        `https://jimmy-network-server.onrender.com/posts/${id}/posts`,
         {
           method: 'DELETE',
           headers: {
@@ -102,9 +102,15 @@ const Post: FC<IPostProps> = ({
             className='max-w-full max-h-[650px]'
             alt='post'
             style={{ borderRadius: '0.75rem', marginTop: '0.75rem' }}
-            src={`http://localhost:3005/assets/${userImgPath}`}
+            src={`https://jimmy-network-server.onrender.com/assets/${userImgPath}`}
           />
-        ) : null}
+        ) : // <img
+        //   className='max-w-full max-h-[650px]'
+        //   alt='post'
+        //   style={{ borderRadius: '0.75rem', marginTop: '0.75rem' }}
+        //   src={`http://localhost:3005/assets/${userImgPath}`}
+        // />
+        null}
         <div className={`${postStyles.flexStart} gap-[40px]`}>
           <div onClick={changeLike} className='cursor-pointer'>
             {isLiked ? (

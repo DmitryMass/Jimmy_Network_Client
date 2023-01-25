@@ -46,9 +46,14 @@ const AddPost: FC<IAddPostProps> = ({ imgPath }) => {
       <div className={addPosts.inputWrapper}>
         <img
           className='w-[50px] h-[50px] rounded-full'
-          src={`http://localhost:3005/assets/${imgPath}`}
+          src={`https://jimmy-network-server.onrender.com/assets/${imgPath}`}
           alt='userPhoto'
         />
+        {/* <img
+          className='w-[50px] h-[50px] rounded-full'
+          src={`http://localhost:3005/assets/${imgPath}`}
+          alt='userPhoto'
+        /> */}
         <input
           className={addPosts.field}
           onChange={(e) => setText(e.target.value)}

@@ -38,7 +38,14 @@ const LoginForm: FC = () => {
 
   return (
     <div className='h-full'>
-      {isError ? <RequestError isError={isError} /> : null}
+      {isError ? (
+        <RequestError
+          isError={isError}
+          text={
+            'Wrong credentials or server error. Wait in minute and try again.'
+          }
+        />
+      ) : null}
       {isLoading ? <RequestLoading /> : null}
       <div className={`${formStyles.wrapper} mt-[50px]`}>
         <img

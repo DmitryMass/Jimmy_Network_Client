@@ -19,10 +19,13 @@ const Posts: FC<IPostsProps> = ({ userId, isProfile = false }) => {
 
   const getPosts = async () => {
     try {
-      const postsResponse = await fetch('http://localhost:3005/posts', {
-        method: 'GET',
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const postsResponse = await fetch(
+        'https://jimmy-network-server.onrender.com/posts',
+        {
+          method: 'GET',
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const posts = await postsResponse.json();
       dispatch(setPosts({ posts: posts }));
     } catch (err) {
@@ -33,7 +36,7 @@ const Posts: FC<IPostsProps> = ({ userId, isProfile = false }) => {
   const getUserPosts = async () => {
     try {
       const userPostsResponse = await fetch(
-        `http://localhost:3005/posts/${userId}/posts`,
+        `https://jimmy-network-server.onrender.com/posts/${userId}/posts`,
         {
           method: 'GET',
           headers: { Authorization: `Bearer ${token}` },
